@@ -1,1 +1,30 @@
 # 9pay-sdk-nodejs
+npm install 9pay-nodejs-sdk
+
+## Configuration
+
+const NinePaySDK = require('./index');
+
+const client = new NinePaySDK({
+    merchantKey: 'juAOxL',
+    merchantSecret: '3Je7RxfgIzbgbTyUX6uIa2FzhcQv1apHdap',
+    endpoint: 'https://sand-payment.9pay.vn'
+});
+
+// 1️⃣ Create payment
+const payment = client.createPayment({
+    amount: 10000,
+    description: 'This is description',
+    return_url: 'https://example.com/return'
+});
+
+console.log(payment.redirectUrl);
+
+// 2️⃣ Inquire payment
+const result = await client.inquirePayment('421042322774489');
+console.log(result);
+
+## env
+NINEPAY_ENV=sandbox
+NINEPAY_MERCHANT_KEY=your_key
+NINEPAY_MERCHANT_SECRET=your_secret
