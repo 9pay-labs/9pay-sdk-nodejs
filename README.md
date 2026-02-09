@@ -11,7 +11,8 @@ const client = new NinePaySDK({
     endpoint: 'https://sand-payment.9pay.vn'
 });
 
-// 1️⃣ Create payment
+## Create payment
+
 const payment = client.createPayment({
     amount: 10000,
     description: 'This is description',
@@ -20,7 +21,8 @@ const payment = client.createPayment({
 
 console.log(payment.redirectUrl);
 
-// 2️⃣ Inquire payment
+## Inquire payment
+
 const result = await client.inquirePayment('421042322774489');
 console.log(result);
 
