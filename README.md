@@ -33,14 +33,8 @@ console.log(payment.redirectUrl);
 
 ## Inquire status transaction
 
-const inquire = client.inquirePayment('INVOICE_NO');
-
-const axios = require('axios');
-const response = await axios.get(inquire.url, {
-  headers: inquire.headers
-});
-
-console.log(response.data);
+const result = await client.inquirePayment('421042322774489');
+console.log(result);
 
 ## env
 NINEPAY_ENV=sandbox
