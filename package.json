@@ -1,0 +1,14 @@
+{
+  "name": "9pay-nodejs-sdk",
+  "version": "1.0.0",
+  "description": "Node.js SDK for 9Pay Payment Gateway",
+  "main": "src/index.js",
+  "keywords": [
+    "9pay",
+    "payment",
+    "sdk",
+    "nodejs"
+  ],
+  "author": "9PAY",
+  "license": "MIT"
+}
