@@ -32,7 +32,7 @@ const payment = client.createPayment({
 console.log(payment.redirectUrl);
 
 // 2️⃣ Inquire payment
-const result = await client.inquirePayment('TS3102_83916273_55129');
+const result = await client.inquirePayment('421042322774489');
 console.log(result);
 
 ## env
