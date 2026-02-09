@@ -10,5 +10,9 @@
     "nodejs"
   ],
   "author": "9PAY",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "dotenv": "^16.4.5"
+  }
 }
