@@ -1,48 +1,31 @@
 const crypto = require('crypto');
 
-/**
- * Unix timestamp (seconds) – string
- */
 function getTimestamp() {
-    return Math.floor(Date.now() / 1000).toString();
+    return new Date().toUTCString();
 }
 
-/**
- * Random invoice number
- */
 function generateInvoiceNo(length = 8) {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let result = '';
-    for (let i = 0; i < length; i++) {
-        result += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return result;
+    return crypto.randomBytes(length).toString('hex').toUpperCase();
 }
 
-/**
- * Build sorted query string
- */
 function buildHttpQuery(data) {
-    const keys = Object.keys(data)
-        .filter(k => data[k] !== undefined && data[k] !== null)
-        .sort();
+    const ordered = Object.keys(data)
+        .sort()
+        .reduce((obj, key) => {
+            if (data[key] !== undefined && data[key] !== null) {
+                obj[key] = data[key];
+            }
+            return obj;
+        }, {});
 
-    const params = new URLSearchParams();
-    keys.forEach(key => {
-        params.append(key, String(data[key]));
-    });
-
-    return params.toString();
+    return new URLSearchParams(ordered).toString();
 }
 
-/**
- * Build HMAC SHA256 signature (Base64)
- */
 function buildSignature(message, secret) {
     return crypto
         .createHmac('sha256', secret)
         .update(message)
-        .digest('base64');
+        .digest('hex');
 }
 
 module.exports = {

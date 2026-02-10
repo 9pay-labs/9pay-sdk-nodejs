@@ -1,18 +1,31 @@
 {
-  "name": "9pay-nodejs-sdk",
+  "name": "ninepay-sdk",
   "version": "1.0.0",
-  "description": "Node.js SDK for 9Pay Payment Gateway",
-  "main": "src/index.js",
+  "description": "Official NinePay Payment SDK for Node.js (Create payment, Inquire, Refund)",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "test": "jest",
+    "lint": "echo \"No lint configured\""
+  },
   "keywords": [
-    "9pay",
+    "ninepay",
     "payment",
-    "sdk",
-    "nodejs"
+    "gateway",
+    "refund",
+    "nodejs",
+    "sdk"
   ],
+  "engines": {
+    "node": ">=18"
+  },
   "author": "9PAY",
   "license": "MIT",
-  "dependencies": {},
-  "devDependencies": {
+  "dependencies": {
     "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nock": "^13.5.4"
   }
 }
