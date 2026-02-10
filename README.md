@@ -1,41 +1,37 @@
 # 9pay-sdk-nodejs
 
-Node.js SDK for 9Pay Payment Gateway.
-
-## Features
-- Create payment redirect URL
-- Inquire transaction status
-- HMAC SHA256 signature
-- Sandbox / Production support
+# NinePay NodeJS SDK
 
 ## Install
-```bash
-npm install 9pay-nodejs-sdk
+npm install ninepay-sdk
 
-## Configuration
-
-const NinePaySDK = require('./index');
-
-const client = new NinePaySDK({
-    merchantKey: 'juAOxL',
-    merchantSecret: '3Je7RxfgIzbgbTyUX6uIa2FzhcQv1apHdap',
-    endpoint: 'https://sand-payment.9pay.vn'
-});
-
-// 1️⃣ Create payment
-const payment = client.createPayment({
-    amount: 10000,
-    description: 'This is description',
-    return_url: 'https://example.com/return'
-});
-
-console.log(payment.redirectUrl);
-
-// 2️⃣ Inquire payment
-const result = await client.inquirePayment('421042322774489');
-console.log(result);
-
-## env
+## Config
+.env
+NINEPAY_MERCHANT_KEY=xxx
+NINEPAY_MERCHANT_SECRET=xxx
 NINEPAY_ENV=sandbox
-NINEPAY_MERCHANT_KEY=your_key
-NINEPAY_MERCHANT_SECRET=your_secret
+
+## Usage
+const NinePaySDK = require('ninepay-sdk');
+const ninepay = NinePaySDK.fromEnv();
+
+### Create payment
+const pay = ninepay.createPayment({
+  amount: 100000,
+  description: 'Order #1',
+  return_url: 'https://site.com/return'
+});
+
+### Inquire
+await ninepay.inquirePayment(pay.invoiceNo);
+
+### Refund
+await ninepay.refund({
+  invoiceNo: pay.invoiceNo,
+  amount: 100000,
+  reason: 'Customer request'
+});
+
+## Test
+npm test
+
