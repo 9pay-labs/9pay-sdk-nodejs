@@ -130,6 +130,149 @@ class NinePaySDK {
         });
     }
 
+    /** PAYER AUTH (CIT / MIT - Card Direct API) */
+    async payerAuth(payload) {
+        if (!payload) {
+            throw new Error('payload is required');
+        }
+
+        if (!payload.request_id) {
+            throw new Error('request_id is required');
+        }
+
+        if (!payload.amount) {
+            throw new Error('amount is required');
+        }
+
+        if (!payload.card) {
+            throw new Error('card is required');
+        }
+
+        const time = getTimestamp();
+        const path = '/v2/payments/payer-auth';
+
+        const body = JSON.stringify(payload);
+
+        const message = [
+            'POST',
+            this.endpoint + path,
+            time,
+            body
+        ].join('\n');
+
+        const signature = buildSignature(message, this.merchantSecret);
+
+        return request(this.endpoint + path, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Date: time,
+                Authorization:
+                    `Signature Algorithm=HS256,` +
+                    `Credential=${this.merchantKey},` +
+                    `SignedHeaders=,` +
+                    `Signature=${signature}`
+            },
+            body
+        });
+    }
+
+    /** AUTHORIZE (Pre-auth Card) */
+    async authorize(payload) {
+        if (!payload) {
+            throw new Error('payload is required');
+        }
+
+        if (!payload.request_id) {
+            throw new Error('request_id is required');
+        }
+
+        if (!payload.order_code) {
+            throw new Error('order_code is required');
+        }
+
+        if (!payload.amount) {
+            throw new Error('amount is required');
+        }
+
+        if (!payload.card) {
+            throw new Error('card is required');
+        }
+
+        const time = getTimestamp();
+        const path = '/v2/payments/authorize';
+        const body = JSON.stringify(payload);
+
+        const message = [
+            'POST',
+            this.endpoint + path,
+            time,
+            body
+        ].join('\n');
+
+        const signature = buildSignature(message, this.merchantSecret);
+
+        return request(this.endpoint + path, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Date: time,
+                Authorization:
+                    `Signature Algorithm=HS256,` +
+                    `Credential=${this.merchantKey},` +
+                    `SignedHeaders=,` +
+                    `Signature=${signature}`
+            },
+            body
+        });
+    }
+
+    /** CAPTURE (Confirm Pre-authorized Payment) */
+    async capture(payload) {
+        if (!payload) {
+            throw new Error('payload is required');
+        }
+
+        if (!payload.request_id) {
+            throw new Error('request_id is required');
+        }
+
+        if (!payload.order_code) {
+            throw new Error('order_code is required');
+        }
+
+        if (!payload.amount) {
+            throw new Error('amount is required');
+        }
+
+        const time = getTimestamp();
+        const path = '/v2/payments/capture';
+        const body = JSON.stringify(payload);
+
+        const message = [
+            'POST',
+            this.endpoint + path,
+            time,
+            body
+        ].join('\n');
+
+        const signature = buildSignature(message, this.merchantSecret);
+
+        return request(this.endpoint + path, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Date: time,
+                Authorization:
+                    `Signature Algorithm=HS256,` +
+                    `Credential=${this.merchantKey},` +
+                    `SignedHeaders=,` +
+                    `Signature=${signature}`
+            },
+            body
+        });
+    }
+
     /** INIT FROM ENV */
     static fromEnv() {
         require('dotenv').config();
