@@ -1,5 +1,10 @@
-const nock = require('nock');
 const NinePaySDK = require('../index');
+
+jest.mock('../src/http', () => ({
+    request: jest.fn()
+}));
+
+const { request } = require('../src/http');
 
 describe('refund', () => {
     const sdk = new NinePaySDK({
@@ -8,35 +13,50 @@ describe('refund', () => {
         env: 'sandbox'
     });
 
-    afterEach(() => {
-        nock.cleanAll();
+    beforeEach(() => {
+        jest.clearAllMocks();
     });
 
     it('should refund payment successfully', async () => {
-        nock('https://sand-payment.9pay.vn')
-            .post('/v2/payments/refund')
-            .reply(200, {
-                code: '00',
-                message: 'Refund success',
-                refund_amount: 5000
-            });
+        request.mockResolvedValue({
+            code: '00',
+            message: 'Refund success',
+            refund_amount: 5000
+        });
 
         const res = await sdk.refund({
-            payment_no: 'PAY123456',
+            invoiceNo: 'PAY123456',
             amount: 5000,
-            description: 'Refund test'
+            reason: 'Refund test'
         });
 
         expect(res.code).toBe('00');
         expect(res.message).toBe('Refund success');
         expect(res.refund_amount).toBe(5000);
+        expect(request).toHaveBeenCalledWith(
+            'https://sand-payment.9pay.vn/v2/payments/refund',
+            expect.objectContaining({
+                method: 'POST',
+                headers: expect.objectContaining({
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                })
+            })
+        );
     });
 
-    it('should throw error if missing payment_no', async () => {
+    it('should throw error if missing invoiceNo', async () => {
         await expect(
             sdk.refund({
                 amount: 5000
             })
-        ).rejects.toThrow('payment_no is required');
+        ).rejects.toThrow('invoiceNo & amount are required');
+    });
+
+    it('should throw error if missing amount', async () => {
+        await expect(
+            sdk.refund({
+                invoiceNo: 'PAY123456'
+            })
+        ).rejects.toThrow('invoiceNo & amount are required');
     });
 });
