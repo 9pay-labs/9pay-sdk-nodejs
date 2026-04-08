@@ -29,9 +29,6 @@
     "jest": "^29.7.0",
     "nock": "^13.5.4"
   },
-  "directories": {
-    "test": "tests"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/9pay-labs/9pay-sdk-nodejs.git"

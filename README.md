@@ -33,7 +33,7 @@ const ninepay = NinePaySDK.fromEnv();
 const ninepay = new NinePaySDK({
     merchantKey: 'your_merchant_key',
     merchantSecret: 'your_merchant_secret',
-    env: 'sandbox' // or 'production'
+    endpoint: '9pay_domain'
 });
 
 // Create a payment
@@ -369,13 +369,6 @@ npm pack
 # In your test project
 npm install /path/to/ninepay-sdk-1.0.0.tgz
 ```
-
-## Environments
-
-| Environment | Endpoint |
-|-------------|----------|
-| Sandbox | https://sand-payment.9pay.vn |
-| Production | https://payment.9pay.vn |
 
 ## Requirements
 

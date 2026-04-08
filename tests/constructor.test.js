@@ -2,6 +2,7 @@ const NinePaySDK = require('../index');
 
 describe('NinePaySDK constructor', () => {
     it('should create instance with valid config', () => {
+
         const sdk = new NinePaySDK({
             merchantKey: 'test_key',
             merchantSecret: 'test_secret',

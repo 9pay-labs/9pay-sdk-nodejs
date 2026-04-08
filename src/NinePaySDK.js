@@ -1,4 +1,3 @@
-const { ENDPOINTS } = require('./constants');
 const { request } = require('./http');
 const {
     getTimestamp,
@@ -8,18 +7,18 @@ const {
 } = require('./utils');
 
 class NinePaySDK {
-    constructor({ merchantKey, merchantSecret, env = 'sandbox', endpoint }) {
+    constructor({ merchantKey, merchantSecret, endpoint }) {
         if (!merchantKey || !merchantSecret) {
             throw new Error('merchantKey & merchantSecret are required');
         }
 
+        if (!endpoint) {
+            throw new Error('endpoint is required');
+        }
+
         this.merchantKey = merchantKey;
         this.merchantSecret = merchantSecret;
-        this.endpoint = endpoint || ENDPOINTS[env];
-
-        if (!this.endpoint) {
-            throw new Error('Invalid env');
-        }
+        this.endpoint = endpoint;
     }
 
     /** CREATE PAYMENT */
@@ -280,7 +279,7 @@ class NinePaySDK {
         return new NinePaySDK({
             merchantKey: process.env.NINEPAY_MERCHANT_KEY,
             merchantSecret: process.env.NINEPAY_MERCHANT_SECRET,
-            env: process.env.NINEPAY_ENV || 'sandbox'
+            endpoint: process.env.NINEPAY_ENDPOINT
         });
     }
 }
