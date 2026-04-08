@@ -13,7 +13,6 @@ Official 9PAY Payment SDK for Node.js applications. Easily integrate payment pro
 - Process refunds
 - Card Direct API (Payer Authentication, Authorize, Capture)
 - TypeScript support
-- Sandbox and Production environments
 
 ## Installation
 
@@ -55,7 +54,7 @@ Create a `.env` file in your project root:
 ```env
 NINEPAY_MERCHANT_KEY=your_merchant_key
 NINEPAY_MERCHANT_SECRET=your_merchant_secret
-NINEPAY_ENV=sandbox
+NINEPAY_ENDPOINT=9pay_domain
 ```
 
 ### Constructor Options
@@ -64,8 +63,7 @@ NINEPAY_ENV=sandbox
 |--------|------|----------|---------|-------------|
 | `merchantKey` | string | Yes | - | Merchant key from 9PAY |
 | `merchantSecret` | string | Yes | - | Merchant secret from 9PAY |
-| `env` | string | No | `sandbox` | `sandbox` or `production` |
-| `endpoint` | string | No | - | Custom API endpoint (overrides `env`) |
+| `endpoint` | string | No | - | 9pay API endpoint  |
 
 ## API Reference
 
@@ -271,7 +269,7 @@ Create SDK instance from environment variables.
 **Example:**
 
 ```javascript
-// Reads NINEPAY_MERCHANT_KEY, NINEPAY_MERCHANT_SECRET, NINEPAY_ENV
+// Reads NINEPAY_MERCHANT_KEY, NINEPAY_MERCHANT_SECRET, NINEPAY_ENDPOINT
 const ninepay = NinePaySDK.fromEnv();
 ```
 
@@ -314,7 +312,7 @@ import NinePaySDK, {
 const config: NinePayConfig = {
     merchantKey: 'your_key',
     merchantSecret: 'your_secret',
-    env: 'sandbox'
+    endpoint: '9pay_domain'
 };
 
 const ninepay = new NinePaySDK(config);
