@@ -1,6 +1,6 @@
 {
   "name": "ninepay-sdk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Official NinePay Payment SDK for Node.js (Create payment, Inquire, Refund)",
   "main": "index.js",
   "types": "index.d.ts",
